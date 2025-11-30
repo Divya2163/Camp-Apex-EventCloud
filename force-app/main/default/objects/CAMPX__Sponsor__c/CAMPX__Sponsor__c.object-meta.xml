@@ -164,5 +164,26 @@
     <pluralLabel>Sponsors</pluralLabel>
     <searchLayouts></searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>Email_Missing</fullName>
+        <active>true</active>
+        <errorConditionFormula>CAMPX__Email__c   = null</errorConditionFormula>
+        <errorDisplayField>CAMPX__Email__c</errorDisplayField>
+        <errorMessage>A sponsor can not be created without an email address</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Event_Missing</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+    ISPICKVAL(CAMPX__Status__c, &quot;Accepted&quot;),
+    ISBLANK(CAMPX__Event__c),
+    OR(
+        ISNEW(),
+        ISCHANGED(CAMPX__Status__c)
+    )
+)</errorConditionFormula>
+        <errorDisplayField>CAMPX__Status__c</errorDisplayField>
+        <errorMessage>A Sponsor must be associated with an event before being Accepted.</errorMessage>
+    </validationRules>
     <visibility>Public</visibility>
 </CustomObject>
